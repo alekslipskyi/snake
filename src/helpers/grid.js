@@ -31,7 +31,7 @@ export const getRightRow = row => {
 export const generatePosition = (occupiedPositions) => {
 	const position = Math.floor(Math.random() * (Math.max(COL_SIZE, ROW_SIZE) - 2)) + 1;
 
-	if (occupiedPositions && occupiedPositions.some(pos => pos.col === position.col && pos.row === position.row)) {
+	if (occupiedPositions && occupiedPositions.includes(position)) {
 		return generatePosition(occupiedPositions);
 	} else return position;
 };

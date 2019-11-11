@@ -30,16 +30,26 @@ const initialState = {
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case MOVE: return getNewState(state);
-		case CHANGE_DIRECTION:
-			return {
-				...state,
-				direction: action.newDirection,
-			};
+		case CHANGE_DIRECTION:return getNewState({ ...state, direction: ensureRightDirection(state.direction, action.newDirection) });
 		case REFRESH: return { ...state, ...generateInitialData() };
 		default:
 			return state;
 	}
 }
+
+const ensureRightDirection = (oldDirection, newDirection) => {
+	if (newDirection === DIRECTIONS.RIGHT && oldDirection === DIRECTIONS.LEFT) {
+		return oldDirection;
+	} else if (newDirection === DIRECTIONS.LEFT && oldDirection === DIRECTIONS.RIGHT) {
+		return oldDirection;
+	} else if (newDirection === DIRECTIONS.TOP && oldDirection === DIRECTIONS.BOTTOM) {
+		return oldDirection;
+	} else if (newDirection === DIRECTIONS.BOTTOM && oldDirection === DIRECTIONS.TOP) {
+		return oldDirection;
+	} else {
+		return newDirection;
+	}
+};
 
 const getNewPosition = (direction, snakePosition) => {
 	let col = 0;
@@ -79,8 +89,8 @@ const getNewState = state => {
 	if (isFoodEaten(nextSnakePosition, state.food)) {
 		newState.score = state.score + 1;
 		newState.food = {
-			col: generatePosition(),
-			row: generatePosition(),
+			col: generatePosition([state.snake.head, ...state.snake.tail].map(pos => pos.col)),
+			row: generatePosition([state.snake.head, ...state.snake.tail].map(pos => pos.row)),
 		};
 		newTail.push(state.snake.head);
 	}

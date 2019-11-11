@@ -4,8 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "export $(cat config/dev.env | xargs) && webpack --config dev.webpack.config.js && webpack-dev-server --config dev.webpack.config.js",
-    "start-prod": "export $(cat config/dev.env | xargs) && node server/index.js",
+    "dev": "export $(cat config/dev.env | xargs) && webpack --config dev.webpack.config.js && webpack-dev-server --config dev.webpack.config.js",
+    "start": "node server/index.js",
     "dist": "export $(cat config/dev.env | xargs) && webpack --config prod.webpack.config.js",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
   },

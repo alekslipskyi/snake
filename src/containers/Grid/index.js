@@ -26,7 +26,7 @@ class Grid extends Component {
 				col: PropTypes.number,
 				row: PropTypes.number
 			}),
-			tail: PropTypes.arrayOf(PropTypes.number)
+			tail: PropTypes.arrayOf(PropTypes.shape({ col: PropTypes.number, row: PropTypes.number }))
 		}),
 		food: PropTypes.shape({ col: PropTypes.number, row: PropTypes.number }),
 		direction: PropTypes.oneOf(Object.values(DIRECTIONS)),
@@ -35,7 +35,8 @@ class Grid extends Component {
 		changeDirection: PropTypes.func,
 	};
 
-	componentWillMount() {
+	constructor(props) {
+		super(props);
 		this.intervalToMove = setInterval(this.props.move, Grid.timeToMove);
 		this.swipe.on(this.props.changeDirection);
 	}
@@ -60,12 +61,14 @@ class Grid extends Component {
 	}
 
 	handleKey = e => {
-		const { isStop, changeDirection } = this.props;
+		const { isStop, changeDirection, move } = this.props;
 
 		if (e.which === this.lastWhich || isStop) return;
+		clearInterval(this.intervalToMove);
 
 		if (KEY_MAP[e.which]) changeDirection(KEY_MAP[e.which]);
 
+		this.intervalToMove = setInterval(move, Grid.timeToMove);
 		this.lastWhich = e.which;
 	};
 
