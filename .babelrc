@@ -1,0 +1,20 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 2 Chrome versions"]
+      }
+    }],
+    "@babel/react"
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-class-properties",
+    "transform-class-properties",
+    "transform-react-jsx",
+    ["module-resolver", {
+      "root": ["./src"]
+    }],
+    ["import-rename", {"^(.*)\\.jsx$": "$1"}]]
+}

@@ -1,0 +1,36 @@
+.grid_container {
+  width: 40vw;
+  height: 40vw;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 1px solid gray;
+
+  @media (max-width: 1366px) {
+    width: 100vw;
+    height: 100vw;
+    border: none;
+  }
+
+  div {
+    height: 4%;
+    width: 4%;
+
+    &.snake {
+      background: goldenrod;
+      border-radius: 25px;
+
+      &.head {
+        &_top { border-radius: 25px 25px 0 0 }
+        &_bottom { border-radius: 0 0 25px 25px }
+        &_right { border-radius: 0 25px 25px 0 }
+        &_left { border-radius: 25px 0 0 25px }
+      }
+    }
+    &.food {
+      background-size: contain;
+      background-image: url("./images/apple.png")
+    }
+  }
+}
